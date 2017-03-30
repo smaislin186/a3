@@ -11,6 +11,13 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('input/{word?}', 'ScrabbleController@show');
+
+Route::get('/score', 'ScrabbleController@score');
+
+# /routes/web.php
+Route::get('/lookup', 'ScrabbleController@lookup');
+/**
+* Main homepage visitors see when they visit just /
+*/
+Route::get('/', 'HomeController');
