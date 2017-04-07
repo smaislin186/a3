@@ -10,7 +10,7 @@
 
 
 @section('content')
-    <h1>Scrabble : {{$word}}</h1>
+    <h1>Scrabble : test {{$word}}</h1>
 @endsection
 
 
