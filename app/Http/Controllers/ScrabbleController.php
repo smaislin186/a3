@@ -7,9 +7,76 @@ use App\Http\Controllers\Controller;
 
 class ScrabbleController extends Controller
 {
+    //GET /
+    # home page
+    public function word(Request $request) {
+        
+        # Validate the request data
+        // $this->validate($request, [
+        //     'inputWord' => 'required|alpha',
+        // ]);
+        
+        $inputWord = $request->input('inputWord');
+        $caseSens = $request->input('lookupDefinition');
+     
+        # Return the view
+        return view('scrabble.word')->with([
+            'inputWord' => $inputWord,
+            'lookupDefinition' => $request->has('lookupDefinition'),
+        ]);
+    }
+
+    //GET /score
+    # lookup word and parse for scoring
+    public function score(Request $request){
+        # Validate the request data
+        $this->validate($request, [
+            'inputWord' => 'required|alpha',
+        ]);
+
+        $word = $request->input('inputWord', null);
+        $lookupDefinition = $request->input('lookupDefinition', 'off');
+
+        # convert to uppercase for dictionary search
+        if($word != null){
+            $word = strtoupper($word);
+        }
+
+        $letters = [];
+        $definition = '';
+        
+        # retrieve definition
+        if($word && $lookupDefinition == 'on'){
+            $dictRaw = file_get_contents(database_path().'/dictionary.json');
+            $dict = json_decode($dictRaw, true);
+            if(!empty($dict[$word])){
+                $definition = $dict[$word];
+            }
+            else{
+                $definition = 'Word not found';
+            }
+        }
+
+        # parse letters
+        if($word != null){
+            $letters = str_split($word, 1);
+        }
+
+        # determine eligibilty for bingo bonus
+        $bingoBonus = false;
+        if(count($letters) >= 7){
+            $bingoBonus = true;
+        }
+        return view('scrabble.score')->with([
+            'word' => $word,
+            'definition' => $definition,
+            'letters' => $letters,
+            'bingoBonus' => $bingoBonus,
+        ]);
+    }
 
     //POST /result
-    # calculate the csore based on score inputs
+    # calculate the score based on inputs
     public function result(Request $request){
         $score = 0;
         $bonusLetter = $request -> input('bonusLetter');
@@ -108,64 +175,4 @@ class ScrabbleController extends Controller
         ]);
     }
 
-    //GET /score
-    # lookup word and parse for scoring
-    public function score(Request $request){
-        # Validate the request data
-        $this->validate($request, [
-            'inputWord' => 'required|alpha',
-        ]);
-
-        $word = $request->input('inputWord', null);
-        $lookupDefinition = $request->input('lookupDefinition', 'off');
-
-        # convert to uppercase for dictionary search
-        if($word != null){
-            $word = strtoupper($word);
-        }
-
-        $letters = [];
-        $definition = '';
-        
-        # retrieve definition
-        if($word && $lookupDefinition == 'on'){
-            $dictRaw = file_get_contents(database_path().'/dictionary.json');
-            $dict = json_decode($dictRaw, true);
-            if(!empty($dict[$word])){
-                $definition = $dict[$word];
-            }
-            else{
-                $definition = 'Word not found';
-            }
-        }
-
-        # parse letters
-        if($word != null){
-            $letters = str_split($word, 1);
-        }
-        return view('scrabble.score')->with([
-            'word' => $word,
-            'definition' => $definition,
-            'letters' => $letters,
-        ]);
-    }
-
-    //GET /
-    # home page
-    public function word(Request $request) {
-        
-        # Validate the request data
-        // $this->validate($request, [
-        //     'inputWord' => 'required|alpha',
-        // ]);
-        
-        $inputWord = $request->input('inputWord');
-        $caseSens = $request->input('lookupDefinition');
-     
-        # Return the view
-        return view('scrabble.word')->with([
-            'inputWord' => $inputWord,
-            'lookupDefinition' => $request->has('lookupDefinition'),
-        ]);
-    }
 }

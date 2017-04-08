@@ -29,7 +29,7 @@
                         <div class='radioGroup'>
                             <div class="radio-inline">
                                 <input type='radio' id='radioN' name='bonusLetter[@php print $key @endphp][@php print $letter @endphp]'
-                                    value='None'checked='CHECKED'>
+                                    value='None' checked='CHECKED'>
                                 <label for='radioN'>None</label>
                             </div>
                             <div class="radio-inline">
@@ -55,19 +55,17 @@
             </div>
             <div class = "BingoBonus">
                 <legend>Bingo Bonus</legend>
-                <input type='checkbox' name='bingo' id ='bingo'>
+                <input type='checkbox' name='bingo' id ='bingo' 
+                    {{ (!$bingoBonus) ? 'disabled' : ''}}
+                >
                 <label>Played all seven tiles in your hand?</label>    
             </div>
             <div class='Calculate'>
                 <input type='submit' value='Calculate' class='btn-primary btn small'>
             </div>
         </form>
-
     @endif
-
-    
 @endsection
-
 
 @push('body')
     <script src="/js/scrabble/show.js"></script>

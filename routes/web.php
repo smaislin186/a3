@@ -13,7 +13,7 @@
 
 
 # /
-# Main homepage visitors see when they visit just 
+# Main homepage visitors see when they visit the site 
 Route::get('/', 'ScrabbleController@word');
 
 #
