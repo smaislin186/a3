@@ -3,96 +3,169 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class ScrabbleController extends Controller
 {
-    // GET /words
-    // public function index(){
-    
-    //     return 'View all the books...';
-    // }
 
-    //GET /scrabble/{$word?}
-    public function show($word = null){
-        # query the database for all books that match the title
-
-        # return the book
-        return view('scrabble.show')->with([
-            'word' => $word,
-        ]);
-    }
-
-    public function score($score = null){
-        return view('scrabble.score')->with([
-            'score' => $score,
-        ]);
-    }
-
-    /**
-	* GET
-    * /lookup
-	*/
-    public function lookup(Request $request) {
+    //POST /result
+    # calculate the csore based on score inputs
+    public function result(Request $request){
+        $score = 0;
+        $bonusLetter = $request -> input('bonusLetter');
+        $wordBonus = $request->input('bonusWord', 'none');
+        $bingoBonus = $request->input('bingo', 'off');
         
-        //dump($request);
-
-        $word = $request->input('searchTerm');
-        $caseSens = $request->input('searchTerm');
+         $letterValue = [
+            'A' => 1,
+            'B' => 3,
+            'C' => 3,
+            'D' => 2,
+            'E' => 1,
+            'F' => 4,
+            'G' => 2,
+            'H' => 4,
+            'I' => 1,
+            'J' => 8,
+            'K' => 5,
+            'L' => 1,
+            'M' => 3,
+            'N' => 1,
+            'O' => 1,
+            'P' => 3,
+            'Q' => 10,
+            'R' => 1,
+            'S' => 1,
+            'T' => 1,
+            'U' => 1,
+            'V' => 4,
+            'W' => 4,
+            'X' => 8,
+            'Y' => 4,
+            'Z' => 10
+        ];
         
-    # Start with an empty array of search results; books that
-    # match our search query will get added to this array
-    $searchResults = [];
+        $letterCount = count($bonusLetter);
 
-    # Store the searchTerm in a variable for easy access
-    # The second parameter (null) is what the variable
-    # will be set to *if* searchTerm is not in the request.
-    $searchTerm = $request->input('searchTerm', null);
-
-    # Only try and search *if* there's a searchTerm
-    if($searchTerm) {
-
-        # Open the books.json data file
-        # database_path() is a Laravel helper to get the path to the database folder
-        # See https://laravel.com/docs/5.4/helpers for other path related helpers
-        $dictionaryRawData = file_get_contents(database_path().'/dictionary.json');
-
-        # Decode the book JSON data into an array
-        # Nothing fancy here; just a built in PHP method
-        $words = json_decode($dictionaryRawData, true);
-
-        # Loop through all the book data, looking for matches
-        # This code was taken from v1 of foobooks we built earlier in the semester
-        foreach($words as $title => $word) {
-
-            # Case sensitive boolean check for a match
-            if($request->has('caseSensitive')) {
-                $match = $title == $searchTerm;
+        // calculate individual tile contributions
+        for ($i = 0; $i < $letterCount; $i++){
+            foreach($bonusLetter[$i] as $letter => $bonus){
+                if($bonus == "None"){
+                    $tile_value = $letterValue[$letter];
+                    $tile_value_after_bonus = $tile_value;
+                    $bonusLetter[$i]["tileValue"] = $tile_value;
+                    $bonusLetter[$i]["total"] = $tile_value_after_bonus;
+                    $bonusLetter[$i]["letter"] = $letter;
+                    $score +=  $tile_value_after_bonus;
+                }
+                if($bonus == "Double"){
+                    $tile_value = $letterValue[$letter];
+                    $tile_value_after_bonus = $tile_value * 2;
+                    $bonusLetter[$i]["tileValue"] = $tile_value;
+                    $bonusLetter[$i]["total"] = $tile_value_after_bonus;
+                    $bonusLetter[$i]["letter"] = $letter;
+                    $score +=  $tile_value_after_bonus;
+                }
+                if($bonus == "Triple"){
+                    $tile_value = $letterValue[$letter];
+                    $tile_value_after_bonus = $tile_value * 3;
+                    $bonusLetter[$i]["tileValue"] = $tile_value;
+                    $bonusLetter[$i]["total"] = $tile_value_after_bonus;
+                    $bonusLetter[$i]["letter"] = $letter;
+                    $score +=  $tile_value_after_bonus;
+                }
+                else{
+                    $errors = "Error: invalid letter bonus supplied";
+                }
             }
-            # Case insensitive boolean check for a match
-            else {
-                $match = strtolower($title) == strtolower($searchTerm);
-            }
-
-            # If it was a match, add it to our results
-            if($match) {
-                $searchResults[$title] = $word;
-            }
-
         }
+        
+        // calculate word bonus contribution
+        if($wordBonus == "double"){
+            $wordBonusContribution = $score;
+            $score *= 2;
+        }
+        elseif($wordBonus == "triple"){
+            $wordBonusContribution = $score * 2;
+            $score *= 3;
+        }
+        else{
+            $wordBonusContribution = 'none';
+        }
+
+        // calculate bonus for using all 7 tiles
+        if($bingoBonus == 'on'){
+            $score += 50;
+        }
+
+        # return the calculated results
+        return view('scrabble.result')->with([
+            'score' => $score,
+            'bonusLetter' => $bonusLetter,
+            'wordBonus' => $wordBonus, 
+            'wordBonusContribution' => $wordBonusContribution,
+            'bingoBonus' => $bingoBonus,
+        ]);
     }
 
-    # Return the view, with the searchTerm *and* searchResults (if any)
-    return view('scrabble.lookup')->with([
-        'searchTerm' => $searchTerm,
-        'caseSensitive' => $request->has('caseSensitive'),
-        'searchResults' => $searchResults
-    ]);
+    //GET /score
+    # lookup word and parse for scoring
+    public function score(Request $request){
+        # Validate the request data
+        $this->validate($request, [
+            'inputWord' => 'required|alpha',
+        ]);
 
-        // # Boolean to see if the request contains data for a particular field
-        // dump($request->has('searchTerm')); # Should be true
-        // dump($request->fullUrl());
-        // dump($request->path());
-        // dump($request->isMethod('post'));
+        $word = $request->input('inputWord', null);
+        $lookupDefinition = $request->input('lookupDefinition', 'off');
+
+        # convert to uppercase for dictionary search
+        if($word != null){
+            $word = strtoupper($word);
+        }
+
+        $letters = [];
+        $definition = '';
         
+        # retrieve definition
+        if($word && $lookupDefinition == 'on'){
+            $dictRaw = file_get_contents(database_path().'/dictionary.json');
+            $dict = json_decode($dictRaw, true);
+            if(!empty($dict[$word])){
+                $definition = $dict[$word];
+            }
+            else{
+                $definition = 'Word not found';
+            }
+        }
+
+        # parse letters
+        if($word != null){
+            $letters = str_split($word, 1);
+        }
+        return view('scrabble.score')->with([
+            'word' => $word,
+            'definition' => $definition,
+            'letters' => $letters,
+        ]);
+    }
+
+    //GET /
+    # home page
+    public function word(Request $request) {
+        
+        # Validate the request data
+        // $this->validate($request, [
+        //     'inputWord' => 'required|alpha',
+        // ]);
+        
+        $inputWord = $request->input('inputWord');
+        $caseSens = $request->input('lookupDefinition');
+     
+        # Return the view
+        return view('scrabble.word')->with([
+            'inputWord' => $inputWord,
+            'lookupDefinition' => $request->has('lookupDefinition'),
+        ]);
     }
 }

@@ -11,22 +11,24 @@
 |
 */
 
-Route::get('input/{word?}', 'ScrabbleController@show');
 
+# /
+# Main homepage visitors see when they visit just 
+Route::get('/', 'ScrabbleController@word');
+
+#
+# /score
+# for picking each letter and word values
 Route::get('/score', 'ScrabbleController@score');
 
-# /routes/web.php
-Route::get('/lookup', 'ScrabbleController@lookup');
-/**
-* Main homepage visitors see when they visit just /
-*/
-Route::get('/', 'HomeController');
+#
+# /result
+# display calculated score
+Route::post('/result', 'ScrabbleController@result');
 
-
-/**
-* Log viewer
-* (only accessible locally)
-*/
+#
+# Log viewer
+# (only accessible locally)
 if(config('app.env') == 'local') {
     Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 }

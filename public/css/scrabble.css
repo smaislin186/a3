@@ -1,5 +1,6 @@
 body {
-    background: #E9E7DA;
+
+    padding:25px;
 }
 
 img {
@@ -9,4 +10,34 @@ img {
 .content {
     text-align: center;
     font-size: 50px;
+    margin: 50px;
 }
+
+footer {
+    margin-top:50px;
+}
+
+.alert, .btn {
+    margin-top:10px;
+}
+
+legend {
+    display:block;
+    margin-top:20px;
+    margin-bottom:5px;
+}
+
+input, textarea, select {
+    display:block;
+}
+
+input[type='checkbox'], input[type='radio'] {
+    display:inline;
+}
+
+/*.letter{
+    color:darkred;
+    text-align: center;
+    float:left;
+    margin-right: 10px;
+}*/
