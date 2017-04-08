@@ -8,10 +8,10 @@ img {
     margin: 0 auto;
 }
 .content {
-    
+
 }
 .title {
-    text-align: center;
+    display: block;
     font-size: 50px;
     padding: 25px;
     border-style: solid;
@@ -19,7 +19,7 @@ img {
 .intro {
     text-align: left;
     font-size: 15px;
-    margin: 10px 25px 25px 25px;
+    margin: 10px 25px 25px 0px;
 }
 
 footer {

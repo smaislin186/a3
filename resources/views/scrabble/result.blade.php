@@ -28,7 +28,7 @@
     <br>
     
     @if($wordBonus != "none")
-        Recieved a {{$wordBonus}} word bonus for {{$wordBonusContribution}} more points
+        Received a {{$wordBonus}} word bonus for {{$wordBonusContribution}} more points
     @endif
 
     <br>

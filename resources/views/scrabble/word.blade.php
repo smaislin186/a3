@@ -8,7 +8,7 @@
 
 @section('content')
     <div class="content">
-        <div class="title">Welcome to Scrabble Calculator</div>
+        <h2>Welcome to Scrabble Calculator</h2>
         <div class="intro">
         Scrabble Calculator will help you validate and score your scrabble words so you can get back to the game faster! 
         <br>
@@ -27,7 +27,7 @@
             
         <form method='GET' action='/score'>
 
-            <label for='inputWord'>Enter word:</label>
+            <label for='inputWord'>Enter word (required):</label>
             <input type='text' name='inputWord' id='inputWord' value='{{ old('inputWord') }}'>
 
             <input type='checkbox' name='lookupDefinition' {{ ($lookupDefinition) ? 'CHECKED' : '' }} >

@@ -78,6 +78,12 @@ class ScrabbleController extends Controller
     //POST /result
     # calculate the score based on inputs
     public function result(Request $request){
+        # Validate the request data
+        $this->validate($request, [
+            'bonusLetter' => 'required',
+            'bonusWord' => 'required',          
+        ]);
+        
         $score = 0;
         $bonusLetter = $request -> input('bonusLetter');
         $wordBonus = $request->input('bonusWord', 'none');
