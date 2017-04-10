@@ -1,21 +1,14 @@
 @extends('layouts.master')
 
-@push('head')
-    <!--<link href='/css/scrabble/show.css' rel='stylesheet'>-->
-@endpush
-
 @section('title')
     Scrabble Score
 @endsection
 
-
-{{--blade comment--}}
-
 @section('content')
-    <h1>Your word is {{$word}}</h1>
+    <h1>Word entered: {{$word}}</h1>
     
     @if($definition != '')
-        <h2>Definition: <em>{{ $definition }}</em></h2>
+        Definition: {{ $definition }}
     @endif
 
     @if($word != null)
@@ -66,7 +59,3 @@
         </form>
     @endif
 @endsection
-
-@push('body')
-    <script src="/js/scrabble/show.js"></script>
-@endpush

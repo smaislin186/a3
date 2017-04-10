@@ -1,7 +1,5 @@
 @extends('layouts.master')
 
-{{--blade comment--}}
-
 @section('title')
     Lookup
 @endsection

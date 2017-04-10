@@ -7,14 +7,9 @@ use App\Http\Controllers\Controller;
 
 class ScrabbleController extends Controller
 {
-    //GET /
+    # GET /
     # home page
     public function word(Request $request) {
-        
-        # Validate the request data
-        // $this->validate($request, [
-        //     'inputWord' => 'required|alpha',
-        // ]);
         
         $inputWord = $request->input('inputWord');
         $caseSens = $request->input('lookupDefinition');
@@ -26,7 +21,7 @@ class ScrabbleController extends Controller
         ]);
     }
 
-    //GET /score
+    # GET /score
     # lookup word and parse for scoring
     public function score(Request $request){
         # Validate the request data
@@ -36,7 +31,7 @@ class ScrabbleController extends Controller
 
         $word = $request->input('inputWord', null);
         $lookupDefinition = $request->input('lookupDefinition', 'off');
-
+        dump($request->input('lookupDefinition', 'off'));
         # convert to uppercase for dictionary search
         if($word != null){
             $word = strtoupper($word);
@@ -75,8 +70,8 @@ class ScrabbleController extends Controller
         ]);
     }
 
-    //POST /result
-    # calculate the score based on inputs
+    # POST /result
+    # calculate and return the score based on inputs
     public function result(Request $request){
         # Validate the request data
         $this->validate($request, [
@@ -120,7 +115,7 @@ class ScrabbleController extends Controller
         
         $letterCount = count($bonusLetter);
 
-        // calculate individual tile contributions
+        # calculate individual tile contributions
         for ($i = 0; $i < $letterCount; $i++){
             foreach($bonusLetter[$i] as $letter => $bonus){
                 if($bonus == "None"){
@@ -153,7 +148,7 @@ class ScrabbleController extends Controller
             }
         }
         
-        // calculate word bonus contribution
+        # calculate word bonus contribution
         if($wordBonus == "double"){
             $wordBonusContribution = $score;
             $score *= 2;
@@ -166,7 +161,7 @@ class ScrabbleController extends Controller
             $wordBonusContribution = 'none';
         }
 
-        // calculate bonus for using all 7 tiles
+        # calculate bonus for using all 7 tiles
         if($bingoBonus == 'on'){
             $score += 50;
         }
