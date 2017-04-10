@@ -45,7 +45,7 @@ class ScrabbleController extends Controller
                 $definition = $dict[$word];
             }
             else{
-                $definition = 'Word not found';
+                $definition = 'none';
             }
         }
 

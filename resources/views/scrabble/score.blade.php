@@ -7,14 +7,15 @@
 @section('content')
     <h1>Word entered: {{$word}}</h1>
     
-    @if($definition != '')
-        Definition: {{ $definition }}
+    @if($definition == 'none')
+        <div class='alert alert-warning'>Word not found! </div>
+    @elseif ($definition != '')
+        <div class='alert alert-info'>Definition: {{ $definition }}</div>
     @endif
 
     @if($word != null)
         <form method ='POST' action='/result'>
             {{ csrf_field() }}
-            <div class ='LetterBonus'>
                 <fieldset class='radios'>  
                 <legend>Letter Bonus</legend>
                     @foreach($letters as $key => $letter)
@@ -39,22 +40,17 @@
                             </div>
                     @endforeach
                 </fieldset>
-            </div>
-             <div class='WordBonus'>
                 <legend>Word Bonus</legend>
-                <select name='bonusWord' id='bonusWord'>
-                    <option value='none' >None</option>
-                    <option value='double'>Double Word</option>
-                    <option value='triple'>Triple Word</option>
-                </select>
-            </div>
-            <div class = "BingoBonus">
+                    <select name='bonusWord' id='bonusWord'>
+                        <option value='none' >None</option>
+                        <option value='double'>Double Word</option>
+                        <option value='triple'>Triple Word</option>
+                    </select>
                 <legend>Bingo Bonus</legend>
-                <input type='checkbox' name='bingo' id ='bingo' 
-                    {{ (!$bingoBonus) ? 'disabled' : ''}}
-                >
-                <label>Played all seven tiles in your hand?</label>    
-            </div>
+                    <input type='checkbox' name='bingo' id ='bingo' 
+                        {{ (!$bingoBonus) ? 'disabled' : ''}}
+                    >
+                    <label>Played all seven tiles in your hand?</label>    
             <div class='Calculate'>
                 <input type='submit' value='Calculate' class='btn-primary btn small'>
             </div>
