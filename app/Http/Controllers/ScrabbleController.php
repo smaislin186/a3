@@ -10,14 +10,11 @@ class ScrabbleController extends Controller
     # GET /
     # home page
     public function word(Request $request) {
-        
-        $inputWord = $request->input('inputWord');
-        $caseSens = $request->input('lookupDefinition');
-     
+             
         # Return the view
         return view('scrabble.word')->with([
-            'inputWord' => $inputWord,
-            'lookupDefinition' => $request->has('lookupDefinition'),
+            'inputWord' => $request->input('inputWord'),
+            'lookupDefinition' => $request->input('lookupDefinition'),
         ]);
     }
 
@@ -31,7 +28,7 @@ class ScrabbleController extends Controller
 
         $word = $request->input('inputWord', null);
         $lookupDefinition = $request->input('lookupDefinition', 'off');
-        dump($request->input('lookupDefinition', 'off'));
+
         # convert to uppercase for dictionary search
         if($word != null){
             $word = strtoupper($word);
@@ -154,7 +151,7 @@ class ScrabbleController extends Controller
             $score *= 2;
         }
         elseif($wordBonus == "triple"){
-            $wordBonusContribution = $score * 2;
+            $wordBonusContribution = $score * 3;
             $score *= 3;
         }
         else{

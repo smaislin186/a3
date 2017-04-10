@@ -1,17 +1,10 @@
 body {
-
     padding:25px;
 }
 
 img {
     display: block;
     margin: 0 auto;
-}
-.title {
-    display: block;
-    font-size: 50px;
-    padding: 25px;
-    border-style: solid;
 }
 .intro {
     text-align: left;
@@ -41,9 +34,9 @@ input[type='checkbox'], input[type='radio'] {
     display:inline;
 }
 
-/*.letter{
+.letter{
     color:darkred;
     text-align: center;
     float:left;
     margin-right: 10px;
-}*/
+}

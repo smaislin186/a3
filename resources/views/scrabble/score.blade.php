@@ -18,6 +18,7 @@
                 <fieldset class='radios'>  
                 <legend>Letter Bonus</legend>
                     @foreach($letters as $key => $letter)
+                    <div class ='letter-group'>
                         <div class='letter'>{{ $letter }}</div>
                         <div class='radioGroup'>
                             <div class="radio-inline">
@@ -35,6 +36,7 @@
                                     value='Triple'>
                                 <label for='radioT'>Triple</label>
                             </div>  
+                            </div>
                     @endforeach
                 </fieldset>
             </div>
