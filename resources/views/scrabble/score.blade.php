@@ -37,14 +37,14 @@
                                     value='Triple'>
                                 <label for='radioT'>Triple</label>
                             </div>  
-                            </div>
+                        </div>
                     @endforeach
                 </fieldset>
                 <legend>Word Bonus</legend>
                     <select name='bonusWord' id='bonusWord'>
-                        <option value='none' >None</option>
-                        <option value='double'>Double Word</option>
-                        <option value='triple'>Triple Word</option>
+                        <option value='None' >None</option>
+                        <option value='Double'>Double Word</option>
+                        <option value='Triple'>Triple Word</option>
                     </select>
                 <legend>Bingo Bonus</legend>
                     <input type='checkbox' name='bingo' id ='bingo' 

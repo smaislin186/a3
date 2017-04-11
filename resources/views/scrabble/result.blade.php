@@ -10,32 +10,65 @@
 
 
 @section('content')
-    <h1>Your word scored {{$score}} points</h1>
-     Here's the breakdown:
-     @foreach($bonusLetter as $index => $letter)
-        @foreach($bonusLetter[$index] as $key => $value)
-            @if ($loop->first)
-                <br>
-                <strong>{{ $key }}</strong> is worth <strong>{{ $letter['tileValue'] }} </strong> points
-                @if( $value != "None")
-                    , but was on a <strong>{{ $value }}</strong> letter tile
-                    and is worth <strong>{{ $letter['total'] }}</strong> points
-                @endif
+    <div class='finalscore'>Score: {{$score}}</div>
+     <div class='total'>Tile breakdown:</div>
+        <table class="table table-bordered">
+        <thead>
+            <tr>
+            <th>Tile</th>
+            @foreach($bonusLetter as $index => $letter)
+                @foreach($bonusLetter[$index] as $key => $value)
+                    @if ($loop->first)
+                        <th>{{ $key }}</th>
+                    @endif
+                @endforeach   
+            @endforeach 
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+            <th scope="row">Base Value</th>
+                @foreach($bonusLetter as $index => $letter)
+                    @foreach($bonusLetter[$index] as $key => $value)
+                        @if ($loop->first)
+                            <td>{{ $letter['tileValue'] }}</td>
+                        @endif
+                    @endforeach   
+                @endforeach
+            </tr>
+            <tr>
+            <th scope="row">Bonus Type</th>
+                @foreach($bonusLetter as $index => $letter)
+                    @foreach($bonusLetter[$index] as $key => $value)
+                        @if ($loop->first)
+                            <td>{{ $value }}</td>
+                        @endif
+                    @endforeach   
+                @endforeach
+            </tr>
+            <tr>
+            <th scope="row">Tile Value with Bonus</th>
+                @foreach($bonusLetter as $index => $letter)
+                    @foreach($bonusLetter[$index] as $key => $value)
+                        @if ($loop->first)
+                            <td>{{ $letter['total'] }}</td>
+                        @endif
+                    @endforeach  
+                @endforeach
+            </tr>
+        </tbody>
+        </table> 
+        <div class='total'>Word Total: {{ $score_from_letters }}</div>
+        <div class='total'>
+            @if($wordBonus != "None")
+                {{$wordBonus}} Word Bonus: {{$wordBonusContribution}}
             @endif
-        @endforeach
-    @endforeach
-    
-    <br>
-    
-    @if($wordBonus != "none")
-        Received a {{$wordBonus}} word bonus for {{$wordBonusContribution}} more points
-    @endif
-
-    <br>
-    @if($bingoBonus == "on")
-        Played all seven tiles in your hand and received a 50 point bonus, well done!
-    @endif
-
+        </div>
+        <div class='total'>
+            @if($bingoBonus == "on")
+                Bingo Bonus: 50 (nice!)
+            @endif
+        </div>
     <div>
         <a href='/'>&larr; Score a new Word</a>
     </div>

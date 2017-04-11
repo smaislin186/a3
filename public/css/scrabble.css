@@ -40,3 +40,13 @@ input[type='checkbox'], input[type='radio'] {
     float:left;
     margin-right: 10px;
 }
+.finalscore{
+    color: darkslateblue;
+    text-decoration: underline;
+    font-size: 40px;
+    margin: 10px;
+}
+.total{
+    font-size: 20px;
+    margin: 10px;
+}

@@ -145,17 +145,19 @@ class ScrabbleController extends Controller
             }
         }
         
+        $score_from_letters = $score;
+
         # calculate word bonus contribution
-        if($wordBonus == "double"){
+        if($wordBonus == "Double"){
             $wordBonusContribution = $score;
             $score *= 2;
         }
-        elseif($wordBonus == "triple"){
+        elseif($wordBonus == "Triple"){
             $wordBonusContribution = $score * 3;
             $score *= 3;
         }
         else{
-            $wordBonusContribution = 'none';
+            $wordBonusContribution = 'None';
         }
 
         # calculate bonus for using all 7 tiles
@@ -166,6 +168,7 @@ class ScrabbleController extends Controller
         # return the calculated results
         return view('scrabble.result')->with([
             'score' => $score,
+            'score_from_letters' => $score_from_letters,
             'bonusLetter' => $bonusLetter,
             'wordBonus' => $wordBonus, 
             'wordBonusContribution' => $wordBonusContribution,
