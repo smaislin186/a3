@@ -1,13 +1,8 @@
 @extends('layouts.master')
 
-@push('head')
-    <!--<link href='/css/scrabble/show.css' rel='stylesheet'>-->
-@endpush
-
 @section('title')
-    Scrabble Score
+    Results
 @endsection
-
 
 @section('content')
     <div class='finalscore'>Score: {{$score}}</div>
@@ -73,8 +68,3 @@
         <a href='/'>&larr; Score a new Word</a>
     </div>
 @endsection
-
-
-@push('body')
-    <script src="/js/scrabble/show.js"></script>
-@endpush

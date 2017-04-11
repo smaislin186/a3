@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    Scrabble Score
+    Score
 @endsection
 
 @section('content')

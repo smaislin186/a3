@@ -175,5 +175,4 @@ class ScrabbleController extends Controller
             'bingoBonus' => $bingoBonus,
         ]);
     }
-
 }
