@@ -39,17 +39,21 @@
                         </div>
                     @endforeach
                 </fieldset>
+                <fieldset class='dropdown'>  
                 <legend>Word Bonus</legend>
                     <select name='bonusWord' id='bonusWord'>
                         <option value='None' >None</option>
                         <option value='Double'>Double Word</option>
                         <option value='Triple'>Triple Word</option>
                     </select>
+                </fieldset>
+                <fieldset class='cb'>  
                 <legend>Bingo Bonus</legend>
                     <input type='checkbox' name='bingo' id ='bingo' 
                         {{ (!$bingoBonus) ? 'disabled' : ''}}
                     >
                     <label>Played all seven tiles in your hand?</label>    
+                </fieldset>
             <div class='Calculate'>
                 <input type='submit' value='Calculate' class='btn-primary btn small'>
             </div>
