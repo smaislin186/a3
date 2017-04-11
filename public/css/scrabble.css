@@ -1,39 +1,32 @@
 body {
     padding:25px;
 }
-
 img {
     display: block;
-   
 }
-.intro {
-    text-align: left;
-    font-size: 15px;
-    margin: 10px 25px 25px 0px;
-}
-
 footer {
     margin-top:50px;
 }
-
 .alert, .btn {
     margin-top:10px;
 }
-
 legend {
     display:block;
     margin-top:20px;
     margin-bottom:5px;
 }
-
 input, textarea, select {
     display:block;
 }
-
 input[type='checkbox'], input[type='radio'] {
     display:inline;
 }
-
+.intro {
+    display:block;
+    text-align: left;
+    font-size: 15px;
+    margin: 10px 25px 25px 0px;
+}
 .letter{
     color:darkred;
     text-align: center;
@@ -41,7 +34,7 @@ input[type='checkbox'], input[type='radio'] {
     margin-right: 10px;
 }
 .finalscore{
-    color: darkslateblue;
+    color: darkolivegreen;
     text-decoration: underline;
     font-size: 40px;
     margin: 10px;

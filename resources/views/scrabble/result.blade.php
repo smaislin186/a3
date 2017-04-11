@@ -11,7 +11,7 @@
 
 @section('content')
     <div class='finalscore'>Score: {{$score}}</div>
-     <div class='total'>Tile breakdown:</div>
+     <div class='total'>Word breakdown:</div>
         <table class="table table-bordered">
         <thead>
             <tr>

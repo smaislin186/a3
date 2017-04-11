@@ -153,7 +153,7 @@ class ScrabbleController extends Controller
             $score *= 2;
         }
         elseif($wordBonus == "Triple"){
-            $wordBonusContribution = $score * 3;
+            $wordBonusContribution = $score * 2;
             $score *= 3;
         }
         else{
