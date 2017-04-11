@@ -25,17 +25,17 @@
                             <div class="radio-inline">
                                 <input type='radio' id='bonusLetter[@php print $key @endphp][@php print $letter @endphp]' name='bonusLetter[@php print $key @endphp][@php print $letter @endphp]'
                                     value='None' checked='CHECKED'>
-                                <label for='radioN'>None</label>
+                                <label for='bonusLetter[@php print $key @endphp][@php print $letter @endphp]' name='bonusLetter[@php print $key @endphp][@php print $letter @endphp]'>None</label>
                             </div>
                             <div class="radio-inline">
                                 <input type='radio' id='bonusLetter[@php print $key @endphp][@php print $letter @endphp]' name='bonusLetter[@php print $key @endphp][@php print $letter @endphp]'
                                     value='Double'>
-                                <label for='radioD'>Double</label>
+                                <label for='bonusLetter[@php print $key @endphp][@php print $letter @endphp]' name='bonusLetter[@php print $key @endphp][@php print $letter @endphp]'>Double</label>
                             </div>
                             <div class="radio-inline">
                                 <input type='radio' id='bonusLetter[@php print $key @endphp][@php print $letter @endphp]' name='bonusLetter[@php print $key @endphp][@php print $letter @endphp]'
                                     value='Triple'>
-                                <label for='radioT'>Triple</label>
+                                <label for='bonusLetter[@php print $key @endphp][@php print $letter @endphp]' name='bonusLetter[@php print $key @endphp][@php print $letter @endphp]'>Triple</label>
                             </div>  
                         </div>
                     @endforeach
